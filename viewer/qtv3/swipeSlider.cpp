@@ -81,6 +81,8 @@ void SwipeSlider::setValue(double value)
 
 void SwipeSlider::setNormalizedValue(double value)
 {
+   static bool processing = false;
+
    if (value == value_ && set_) return;
 
    value_ = value;
@@ -89,7 +91,13 @@ void SwipeSlider::setNormalizedValue(double value)
    if (value_ < 0.0) value_ = 0.0;
    else if (value_ > 1.0) value_ = 1.0;
 
+   if (processing) return;
+
    repaint();
+
+   processing = true;
+   QApplication::processEvents();
+   processing = false;
 
    emit valueChanged(getValue());
 }
