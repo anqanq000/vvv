@@ -55,18 +55,42 @@ public:
    //! return height for given width
    int heightForWidth(int x) const
    {
-      int y = x/aspect_;
-      int miny = minsize_/aspect_;
-      if (y<miny) y = miny;
+      int y, miny;
+
+      if (orientation_ == Qt::Vertical)
+      {
+         y = x*aspect_;
+         miny = minsize_*aspect_;
+      }
+      else
+      {
+         y = x/aspect_;
+         miny = minsize_;
+      }
+
+      if (y < miny) y = miny;
+
       return(y);
    }
 
    //! return width for given height
    int widthForHeight(int y) const
    {
-      int x = y/aspect_;
-      int minx = minsize_/aspect_;
-      if (x<minx) x = minx;
+      int x, minx;
+
+      if (orientation_ == Qt::Vertical)
+      {
+         x = y/aspect_;
+         minx = minsize_;
+      }
+      else
+      {
+         x = y*aspect_;
+         minx = minsize_*aspect_;
+      }
+
+      if (x < minx) x = minx;
+
       return(x);
    }
 
